@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "asd",
+      "type": "com.monitor.peeper.entity.applicationEntity",
+      "sourceType": "com.monitor.peeper.entity.applicationEntity"
+    }
+  ],
+  "properties": [
+    {
+      "name": "asd.test",
+      "type": "java.lang.String",
+      "sourceType": "com.monitor.peeper.entity.applicationEntity"
+    }
+  ],
+  "hints": []
+}

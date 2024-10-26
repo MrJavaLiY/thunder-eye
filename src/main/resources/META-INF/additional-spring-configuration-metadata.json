@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "qwe.basePackage",
+      "type": "java.lang.String",
+      "description": "文档扫描包路径"
+    },
+    {
+      "name": "zxc.asd.sad",
+      "type": "java.lang.String",
+      "description": "文档扫描包路径"
+    }
+  ]
+}
