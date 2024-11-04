@@ -1,4 +1,4 @@
-package com.tunder.eye.condition;
+package com.thunder.eye.condition;
 
 import lombok.Data;
 

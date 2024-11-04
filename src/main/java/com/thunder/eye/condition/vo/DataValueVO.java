@@ -1,4 +1,4 @@
-package com.tunder.eye.condition.vo;
+package com.thunder.eye.condition.vo;
 
 import com.thunder.eye.entity.entity.excel.DataValue;
 import lombok.Data;

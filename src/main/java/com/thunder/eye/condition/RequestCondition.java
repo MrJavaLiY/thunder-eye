@@ -1,4 +1,4 @@
-package com.tunder.eye.condition;
+package com.thunder.eye.condition;
 
 import com.thunder.eye.entity.entity.excel.ServerMessage;
 import lombok.Data;
