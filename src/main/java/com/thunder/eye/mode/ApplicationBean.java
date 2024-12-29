@@ -1,4 +1,4 @@
-package com.thunder.eye.mode.mode;
+package com.thunder.eye.mode;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

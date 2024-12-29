@@ -1,6 +1,5 @@
 package com.thunder.eye.condition;
 
-import com.thunder.eye.entity.entity.excel.ServerMessage;
 import lombok.Data;
 
 @Data
@@ -13,8 +12,6 @@ public class RequestCondition {
      */
     private String serverType;
     private Boolean enable;
-
-
-    private ServerMessage sm;
+    private String name;
     private String index;
 }

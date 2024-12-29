@@ -1,10 +1,10 @@
-package com.thunder.eye.exception.exception;
+package com.thunder.eye.exception;
 
 /**
  * @author User
  * @date 2022-03-14
  */
-public class NotSM2UpdateException extends ServerMessageException {
+public class ServerMessageException extends RuntimeException {
     static final long serialVersionUID = -7034897190745766939L;
 
     /**
@@ -12,7 +12,7 @@ public class NotSM2UpdateException extends ServerMessageException {
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      */
-    public NotSM2UpdateException() {
+    public ServerMessageException() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class NotSM2UpdateException extends ServerMessageException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public NotSM2UpdateException(String message) {
+    public ServerMessageException(String message) {
         super(message);
     }
 
@@ -42,7 +42,7 @@ public class NotSM2UpdateException extends ServerMessageException {
      *                unknown.)
      * @since 1.4
      */
-    public NotSM2UpdateException(String message, Throwable cause) {
+    public ServerMessageException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -59,7 +59,7 @@ public class NotSM2UpdateException extends ServerMessageException {
      *              unknown.)
      * @since 1.4
      */
-    public NotSM2UpdateException(Throwable cause) {
+    public ServerMessageException(Throwable cause) {
         super(cause);
     }
 
@@ -77,9 +77,9 @@ public class NotSM2UpdateException extends ServerMessageException {
      *                           be writable
      * @since 1.7
      */
-    protected NotSM2UpdateException(String message, Throwable cause,
-                                    boolean enableSuppression,
-                                    boolean writableStackTrace) {
+    protected ServerMessageException(String message, Throwable cause,
+                                     boolean enableSuppression,
+                                     boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

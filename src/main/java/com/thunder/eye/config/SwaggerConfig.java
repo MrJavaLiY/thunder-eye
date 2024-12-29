@@ -23,7 +23,7 @@ public class SwaggerConfig {
                 "https://blog.csdn.net/xhmico?type=blog", // 作者网址
                 "777777777@163.com"); // 作者邮箱
         return new ApiInfoBuilder()
-                .title("窥视者-接口文档") // 标题
+                .title("雷眸-接口文档") // 标题
                 .description("当你凝视深渊时,深渊也在凝视你") // 描述
                 .termsOfServiceUrl("https://www.baidu.com") // 跳转连接
                 .version("0.0.1") // 版本

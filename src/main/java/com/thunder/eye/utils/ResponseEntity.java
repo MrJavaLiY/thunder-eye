@@ -18,7 +18,7 @@ public class ResponseEntity<T> {
         responseEntity.setMessage(message);
         return responseEntity;
     }
-    public  ResponseEntity<T> faile( String message) {
+    public  ResponseEntity<T> fail(String message) {
         ResponseEntity<T> responseEntity = new ResponseEntity<>();
         responseEntity.setCode(SERVER_FAIL);
         responseEntity.setMessage(message);

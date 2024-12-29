@@ -1,4 +1,4 @@
-package com.thunder.eye.mode.mode;
+package com.thunder.eye.mode;
 
 import java.io.File;
 import java.io.IOException;

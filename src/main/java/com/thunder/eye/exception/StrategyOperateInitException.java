@@ -1,10 +1,10 @@
-package com.thunder.eye.exception.exception;
+package com.thunder.eye.exception;
 
 /**
  * @author User
  * @date 2022-03-14
  */
-public class ServerMessageException extends RuntimeException {
+public class StrategyOperateInitException extends RuntimeException {
     static final long serialVersionUID = -7034897190745766939L;
 
     /**
@@ -12,7 +12,7 @@ public class ServerMessageException extends RuntimeException {
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      */
-    public ServerMessageException() {
+    public StrategyOperateInitException() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class ServerMessageException extends RuntimeException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public ServerMessageException(String message) {
+    public StrategyOperateInitException(String message) {
         super(message);
     }
 
@@ -42,7 +42,7 @@ public class ServerMessageException extends RuntimeException {
      *                unknown.)
      * @since 1.4
      */
-    public ServerMessageException(String message, Throwable cause) {
+    public StrategyOperateInitException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -59,7 +59,7 @@ public class ServerMessageException extends RuntimeException {
      *              unknown.)
      * @since 1.4
      */
-    public ServerMessageException(Throwable cause) {
+    public StrategyOperateInitException(Throwable cause) {
         super(cause);
     }
 
@@ -77,9 +77,9 @@ public class ServerMessageException extends RuntimeException {
      *                           be writable
      * @since 1.7
      */
-    protected ServerMessageException(String message, Throwable cause,
-                                     boolean enableSuppression,
-                                     boolean writableStackTrace) {
+    protected StrategyOperateInitException(String message, Throwable cause,
+                                           boolean enableSuppression,
+                                           boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

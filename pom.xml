@@ -17,17 +17,25 @@
         <java.version>8</java.version>
     </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.gitee.sunchenbin.mybatis.actable/mybatis-enhance-actable -->
-<!--        <dependency>-->
-<!--            <groupId>com.gitee.sunchenbin.mybatis.actable</groupId>-->
-<!--            <artifactId>mybatis-enhance-actable</artifactId>-->
-<!--            <version>1.5.0.RELEASE</version>-->
-<!--        </dependency>-->
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.19</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>2.9.3</version>
+        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.1</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -54,19 +62,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.springfox/springfox-spring-web &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-spring-web</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
             <version>3.3.3</version>
         </dependency>
+
         <dependency>
             <groupId>io.cloudsoft.windows</groupId>
             <artifactId>winrm4j</artifactId>
@@ -78,7 +79,6 @@
                 </exclusion>
             </exclusions> <!-- WINRM4J_VERSION -->
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.github.mwiede/jsch -->
         <dependency>
             <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>

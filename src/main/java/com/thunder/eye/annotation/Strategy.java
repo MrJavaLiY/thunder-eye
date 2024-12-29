@@ -29,4 +29,5 @@ public @interface Strategy {
      * @return
      */
     boolean isDefault() default false;
+
 }

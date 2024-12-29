@@ -1,4 +1,4 @@
-package com.thunder.eye.job.job;
+package com.thunder.eye.job;
 
 public interface MyJob {
 

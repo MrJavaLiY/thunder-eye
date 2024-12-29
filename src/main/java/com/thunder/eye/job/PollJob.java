@@ -1,4 +1,4 @@
-package com.thunder.eye.job.job;
+package com.thunder.eye.job;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.thunder.eye.dao.dao;
+package com.thunder.eye.dao;
 
 import java.util.List;
 

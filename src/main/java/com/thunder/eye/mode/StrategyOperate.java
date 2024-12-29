@@ -1,9 +1,9 @@
-package com.thunder.eye.mode.mode;
+package com.thunder.eye.mode;
 
 import com.thunder.eye.annotation.Strategy;
 import com.thunder.eye.annotation.StrategyPoint;
-import com.thunder.eye.exception.exception.StrategyExecuteMethodException;
-import com.thunder.eye.exception.exception.StrategyOperateInitException;
+import com.thunder.eye.exception.StrategyExecuteMethodException;
+import com.thunder.eye.exception.StrategyOperateInitException;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;

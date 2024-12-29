@@ -8,11 +8,11 @@ import java.util.Date;
 @Data
 @ConfigurationProperties
 public class JarDetailEntity {
-    public final static String OFFLINE = "0";
-    public final static String ONLINE = "1";
-    public final static String NEW_OFFLINE = "2";
-    public final static String STANDBY = "0";
-    public final static String RUN = "1";
+    public final static int OFFLINE = 0;
+    public final static int ONLINE = 1;
+    public final static int NEW_ONLINE = 2;
+    public final static int STANDBY = 0;
+    public final static int RUN = 1;
 
     private int pid;
     private String pidName;
@@ -34,15 +34,12 @@ public class JarDetailEntity {
     /**
      * 存活状态，0表示当前服务在本次心跳中死亡，1表示当前存活，2表示新上线
      */
-    private String surStatus;
+    private int surStatus;
 
     /**
      * 运行状态，0表示待机，1表示运行中，跟#surStatus的1和2存活状态关联
      */
-    private String runStatus;
+    private int runStatus;
 
 
-    public String getIndex() {
-        return serverIndex + "+" + port;
-    }
 }

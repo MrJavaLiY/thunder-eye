@@ -2,7 +2,7 @@ package com.thunder.eye.service.impl;
 
 
 import com.thunder.eye.entity.entity.JarDetailEntity;
-import com.thunder.eye.entity.entity.excel.ServerMessage;
+import com.thunder.eye.entity.sql.ServerConfig;
 import com.thunder.eye.service.LinuxService;
 import com.thunder.eye.utils.ResponseEntity;
 import com.thunder.eye.utils.ShellUtil;
@@ -10,21 +10,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 @Slf4j
 public class LinuxServerImpl implements LinuxService {
+
     @Override
-    public ResponseEntity<List<JarDetailEntity>> dispatch(ServerMessage serverMessage) throws Exception {
-        System.out.println("Linux");
-        ShellUtil shell = new ShellUtil(serverMessage.getIp(), serverMessage.getUser(), serverMessage.getPassword());
+    public ResponseEntity<List<JarDetailEntity>> dispatch(ServerConfig serverConfig) throws Exception {
+        log.debug("Linux服务器[{}]开始建立链接", serverConfig.getIp());
+        ShellUtil shell = new ShellUtil(serverConfig.getIp(), serverConfig.getUsername(), serverConfig.getPassword());
+        log.debug("链接建立成功");
         String jpsValue = shell.exec("jps -l");
-        System.out.println("===========jps=======");
-        System.out.println(jpsValue);
-        System.out.println("=====================");
+        log.debug("===========jps=======");
+        log.debug(jpsValue);
+        log.debug("=====================");
         String[] jpes = jpsValue.split("\n");
-        List<JarDetailEntity> winCmdEntities = new ArrayList<>();
+        List<JarDetailEntity> linuxServiceCmdEntities = new ArrayList<>();
         for (String jpe : jpes) {
             if (jpe.contains("jps")) {
                 continue;
@@ -36,10 +39,13 @@ public class LinuxServerImpl implements LinuxService {
             if (entity.getPort() == 0) {
                 continue;
             }
-            winCmdEntities.add(entity);
+            entity.setServerIndex(serverConfig.getIp() + ":" + entity.getPort());
+            entity.setLastTime(new Date());
+            entity.setSurStatus(1);
+            linuxServiceCmdEntities.add(entity);
         }
 
-        return new ResponseEntity<List<JarDetailEntity>>().success(winCmdEntities, "s");
+        return new ResponseEntity<List<JarDetailEntity>>().success(linuxServiceCmdEntities, "s");
     }
 
     private void getjarMessage(ShellUtil shell, JarDetailEntity entity) throws Exception {
@@ -47,9 +53,9 @@ public class LinuxServerImpl implements LinuxService {
         if (jvmmes.contains("org.jetbrains")) {
             return;
         }
-        System.out.println("===========jcmd=======");
-        System.out.println(jvmmes);
-        System.out.println("=====================");
+        log.debug("===========jcmd=======");
+        log.debug(jvmmes);
+        log.debug("=====================");
         String[] jvmesValues = jvmmes.split("java_command:");
 
         if (jvmesValues.length > 1) {
@@ -66,10 +72,10 @@ public class LinuxServerImpl implements LinuxService {
     private void getPath(ShellUtil shell, JarDetailEntity entity) throws Exception {
         String pwdx = "pwdx " + entity.getPid();
         String pwdxValue = shell.exec(pwdx);
-        System.out.println("===========pwdx=======");
-        System.out.println(pwdxValue);
-        System.out.println("=====================");
-        entity.setJarPath(pwdxValue.substring(pwdxValue.indexOf("/")).replaceAll("\n",""));
+        log.debug("===========pwdx=======");
+        log.debug(pwdxValue);
+        log.debug("=====================");
+        entity.setJarPath(pwdxValue.substring(pwdxValue.indexOf("/")).replaceAll("\n", ""));
     }
 
     private void getPost(ShellUtil shell, JarDetailEntity entity) throws Exception {
@@ -78,11 +84,11 @@ public class LinuxServerImpl implements LinuxService {
         }
         String sudo = " sudo lsof -i -P -n |grep " + entity.getPid();
         String sudoValue = shell.exec(sudo);
-        System.out.println("===========sudo=======");
-        System.out.println(sudoValue);
-        System.out.println("=====================");
+        log.debug("===========sudo=======");
+        log.debug(sudoValue);
+        log.debug("=====================");
         String[] sudoValues = sudoValue.split("\\*:");
-        String port = sudoValues[1].substring(0,sudoValues[1].indexOf("(")).replaceAll(" ", "");
+        String port = sudoValues[1].substring(0, sudoValues[1].indexOf("(")).replaceAll(" ", "");
         entity.setPort(Integer.parseInt(port));
     }
 

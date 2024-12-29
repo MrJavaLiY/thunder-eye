@@ -29,11 +29,11 @@ public class DingNoticeServiceImpl implements DingNoticeService {
             if ("true".equals(jsonObject.getString("success"))) {
                 return new ResponseEntity<String>().success("", "成功");
             } else {
-                return new ResponseEntity<String>().faile("成功");
+                return new ResponseEntity<String>().fail("成功");
             }
         } catch (Exception e) {
             log.error("发送钉钉错误{}", e);
-            return new ResponseEntity<String>().faile(e.getMessage());
+            return new ResponseEntity<String>().fail(e.getMessage());
         }
     }
 
