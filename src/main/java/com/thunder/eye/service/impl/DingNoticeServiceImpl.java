@@ -15,9 +15,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author liyang
- * @date 2024-01-06
- * @description:
+ * 钉钉通知服务实现类
+ * 负责实现钉钉通知相关的功能
  */
 @Service
 @Slf4j
@@ -25,14 +24,23 @@ public class DingNoticeServiceImpl implements DingNoticeService {
     @Resource
     StateService stateService;
 
+    /**
+     * 发送钉钉通知的方法
+     *
+     * @param dingMessage 钉钉消息对象，包含消息内容和 webhook 地址
+     * @return 返回一个 ResponseEntity 对象，包含处理结果
+     */
     @Override
     public ResponseEntity<String> notice(DingMessage dingMessage) {
         try {
+            // 封装钉钉消息实体
             DingTalkEntity dingtalk = new DingTalkEntity(dingMessage);
             log.info("封装数据：{}", JSONObject.toJSONString(dingtalk));
+            // 发送消息到钉钉
             String response = HttpUtil.post(dingMessage.getWebhook(), JSONObject.toJSONString(dingtalk));
             log.info("返回数据：{}", response);
             JSONObject jsonObject = JSONObject.parseObject(response);
+            // 根据钉钉返回的消息判断是否发送成功
             if ("true".equals(jsonObject.getString("success"))) {
                 return new ResponseEntity<String>().success("", "成功");
             } else {
@@ -44,6 +52,10 @@ public class DingNoticeServiceImpl implements DingNoticeService {
         }
     }
 
+    /**
+     * 通知离线服务器的方法
+     * 检查并通知所有离线的服务器，通过调用 notice 方法发送钉钉通知
+     */
     @Override
     public void noticeDieServer() {
         List<JarDetailEntity> dieServer = stateService.getDieServer();

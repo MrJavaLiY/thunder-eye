@@ -17,6 +17,9 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 心跳服务实现类
+ */
 @Service
 @Slf4j
 public class HeartbeatServiceImpl implements HeartbeatService {
@@ -110,3 +113,4 @@ public class HeartbeatServiceImpl implements HeartbeatService {
         return responseEntity.getData();
     }
 }
+
