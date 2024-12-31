@@ -11,4 +11,6 @@ import com.thunder.eye.utils.ResponseEntity;
  */
 public interface DingNoticeService {
     public ResponseEntity<String> notice(DingMessage dingMessage) ;
+
+    void noticeDieServer() ;
 }

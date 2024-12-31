@@ -10,8 +10,13 @@ public class PollJob {
     @Resource
     MyJob myJob;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 15000, initialDelay = 5000)
     public void task1() {
-        myJob.job1();
+        myJob.heartbeat();
+    }
+
+    @Scheduled(fixedDelay = 30000, initialDelay = 10000)
+    public void task2() {
+        myJob.noticeDieServer();
     }
 }

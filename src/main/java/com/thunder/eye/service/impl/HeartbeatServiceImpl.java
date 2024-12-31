@@ -6,11 +6,13 @@ import com.thunder.eye.mode.StrategyOperate;
 import com.thunder.eye.service.HeartbeatService;
 import com.thunder.eye.service.ServerConfigService;
 import com.thunder.eye.utils.CacheUtil;
+import com.thunder.eye.utils.CaffeineUtil;
 import com.thunder.eye.utils.ResponseEntity;
 import com.xiaoleilu.hutool.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +24,17 @@ public class HeartbeatServiceImpl implements HeartbeatService {
     StrategyOperate strategyOperate;
     @Resource
     ServerConfigService serverConfigService;
-    @Resource
     CacheUtil cacheUtil;
+
+    @Override
+    public CacheUtil getCacheUtil() {
+        return cacheUtil;
+    }
+
+    @PostConstruct
+    public void init() {
+        cacheUtil = new CaffeineUtil();
+    }
 
     @Override
     public void dispatch() {
@@ -72,7 +83,8 @@ public class HeartbeatServiceImpl implements HeartbeatService {
                 for (JarDetailEntity nowDatum : nowData) {
                     if (nowDatum.getServerIndex().equals(oldDatum.getServerIndex())) {
                         nowDatum.setSurStatus(JarDetailEntity.ONLINE);
-                        isExist = true;break;
+                        isExist = true;
+                        break;
                     }
                 }
                 if (!isExist) {
