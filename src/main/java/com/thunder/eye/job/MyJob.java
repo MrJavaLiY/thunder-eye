@@ -5,4 +5,5 @@ public interface MyJob {
 
     void heartbeat();
     void noticeDieServer();
+    void closeShell();
 }

@@ -3,12 +3,14 @@ package com.thunder.eye.service.impl;
 
 import com.thunder.eye.entity.entity.JarDetailEntity;
 import com.thunder.eye.entity.sql.ServerConfig;
+import com.thunder.eye.service.ShellService;
 import com.thunder.eye.service.WinService;
 import com.thunder.eye.utils.ResponseEntity;
 import com.thunder.eye.utils.ShellUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -16,12 +18,12 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 public class WinServerImpl implements WinService {
-
+    @Resource
+    ShellService shellService;
 
     @Override
     public ResponseEntity<List<JarDetailEntity>> dispatch(ServerConfig serverConfig) throws Exception {
-        log.debug("windows服务器[{}]开始建立链接", serverConfig.getIp());
-        ShellUtil shell = new ShellUtil(serverConfig.getIp(), serverConfig.getUsername(), serverConfig.getPassword());
+        ShellUtil shell = shellService.getShellUtil(serverConfig);
         String jpsValue = shell.exec("jps -l");
         log.debug("===========jps=======");
         log.debug(jpsValue);
@@ -74,7 +76,7 @@ public class WinServerImpl implements WinService {
     }
 
     private void getPost(ShellUtil shell, JarDetailEntity entity) throws Exception {
-        if (entity.getJarName()!=null&&entity.getJarName().contains("org.jetbrains")) {
+        if (entity.getJarName() != null && entity.getJarName().contains("org.jetbrains")) {
             return;
         }
         String netstat = "netstat -aon |findstr " + entity.getPid();
@@ -99,6 +101,7 @@ public class WinServerImpl implements WinService {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+
 
 
 }

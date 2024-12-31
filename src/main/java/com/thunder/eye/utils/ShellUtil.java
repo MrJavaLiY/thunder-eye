@@ -1,11 +1,13 @@
 package com.thunder.eye.utils;
 
 import com.jcraft.jsch.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
 
+@Slf4j
 public class ShellUtil {
-    private Session session;
+    private volatile Session session;
     private final String ip;
     private final String user;
     private final String password;
@@ -31,7 +33,21 @@ public class ShellUtil {
     public String exec(String command) throws Exception {
 
         if (session == null) {
-            extracted(ip, user, password);
+            synchronized (this) {
+                if (session == null) {
+                    if (isValidInput(ip, user, password)) {
+                        try {
+                            extracted(ip, user, password);
+                        } catch (Exception e) {
+                            // 记录日志并处理异常
+                            log.error("Failed to extract session", e);
+                            throw new RuntimeException("Failed to extract session", e);
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Invalid input parameters");
+                    }
+                }
+            }
         }
 
         Channel channel = session.openChannel("exec");
@@ -64,5 +80,11 @@ public class ShellUtil {
         channel.disconnect();
         session.disconnect();
         session = null;
+    }
+
+    private boolean isValidInput(String ip, String user, String password) {
+        return ip != null && !ip.trim().isEmpty() &&
+                user != null && !user.trim().isEmpty() &&
+                password != null && !password.trim().isEmpty();
     }
 }

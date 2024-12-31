@@ -19,4 +19,9 @@ public class PollJob {
     public void task2() {
         myJob.noticeDieServer();
     }
+
+    @Scheduled(fixedDelay = 1000 * 60 * 10, initialDelay = 1000 * 60 * 10)
+    public void task3() {
+        myJob.closeShell();
+    }
 }
