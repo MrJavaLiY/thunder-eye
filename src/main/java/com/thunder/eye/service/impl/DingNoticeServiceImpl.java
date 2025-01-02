@@ -2,10 +2,12 @@ package com.thunder.eye.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.thunder.eye.entity.entity.JarDetailEntity;
+import com.thunder.eye.entity.entity.ProgramEntity;
 import com.thunder.eye.entity.entity.ding.DingMessage;
 import com.thunder.eye.entity.entity.ding.DingTalkEntity;
 import com.thunder.eye.service.DingNoticeService;
 import com.thunder.eye.service.StateService;
+import com.thunder.eye.utils.CacheUtil;
 import com.thunder.eye.utils.ResponseEntity;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +19,17 @@ import java.util.List;
 /**
  * 钉钉通知服务实现类
  * 负责实现钉钉通知相关的功能
+ *
+ * @author ly
+ * @date 2025年1月2日22:21:04
  */
 @Service
 @Slf4j
 public class DingNoticeServiceImpl implements DingNoticeService {
     @Resource
     StateService stateService;
+    @Resource
+    CacheUtil cacheUtil;
 
     /**
      * 发送钉钉通知的方法
@@ -47,7 +54,7 @@ public class DingNoticeServiceImpl implements DingNoticeService {
                 return new ResponseEntity<String>().fail("成功");
             }
         } catch (Exception e) {
-            log.error("发送钉钉错误{}", e);
+            log.error("发送钉钉错误", e);
             return new ResponseEntity<String>().fail(e.getMessage());
         }
     }
@@ -61,11 +68,13 @@ public class DingNoticeServiceImpl implements DingNoticeService {
         List<JarDetailEntity> dieServer = stateService.getDieServer();
         if (dieServer != null && !dieServer.isEmpty()) {
             for (JarDetailEntity jarDetailEntity : dieServer) {
+                ProgramEntity programEntity = cacheUtil.get(jarDetailEntity.getIp() + ":" + jarDetailEntity.getPort());
+                String name = programEntity != null ? jarDetailEntity.getIp() : "未配置";
                 DingMessage dingMessage = new DingMessage();
                 dingMessage.setWebhook("");
-                dingMessage.setValue("服务器：" + jarDetailEntity.getIp()
-                        + " 端口：" + jarDetailEntity.getPort()
-                        + " 最后在线时间：" + jarDetailEntity.getLastTime() + ";该服务疑似离线，请及时检查");
+                dingMessage.setValue("服务名称[" + name + "]\n服务器：" + jarDetailEntity.getIp()
+                        + " \n端口：" + jarDetailEntity.getPort()
+                        + " \n最后在线时间：" + jarDetailEntity.getLastTime() + "\n该服务疑似离线，请及时检查");
                 notice(dingMessage);
             }
         }

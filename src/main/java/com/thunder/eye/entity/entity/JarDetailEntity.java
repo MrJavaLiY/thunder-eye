@@ -1,12 +1,10 @@
 package com.thunder.eye.entity.entity;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Date;
 
 @Data
-@ConfigurationProperties
 public class JarDetailEntity {
     public final static int OFFLINE = 0;
     public final static int ONLINE = 1;
