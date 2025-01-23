@@ -21,23 +21,62 @@ public class WinServerImpl implements WinService {
     @Resource
     ShellService shellService;
 
+//    @Override
+//    public ResponseEntity<List<JarDetailEntity>> dispatch(ServerConfig serverConfig) throws Exception {
+//        ShellUtil shell = shellService.getShellUtil(serverConfig);
+
+    /// /        String jpsValue = shell.exec("cmd /c jps -l");
+//        String jpsValue = shell.exec("wmic process where \"name like '%java%'\" get ProcessId, CommandLine\n");
+//
+//        log.debug("===========jps=======");
+//        log.debug(jpsValue);
+//        log.debug("=====================");
+//        String[] jpes = jpsValue.split("\n");
+//        List<JarDetailEntity> winCmdEntities = new ArrayList<>();
+//        for (String jpe : jpes) {
+//            if (jpe.contains("jps")) {
+//                continue;
+//            }
+//            JarDetailEntity entity = new JarDetailEntity();
+//            String[] jps1 = jpe.split(" ");
+//            entity.setPid(Integer.parseInt(jps1[0]));
+//            this.getjarMessage(shell, entity);
+//            if (entity.getPort() == 0) {
+//                continue;
+//            }
+//            entity.setServerIndex(serverConfig.getIp() + ":" + entity.getPort());
+//            winCmdEntities.add(entity);
+//        }
+//
+//        return new ResponseEntity<List<JarDetailEntity>>().success(winCmdEntities, "s");
+//    }
     @Override
     public ResponseEntity<List<JarDetailEntity>> dispatch(ServerConfig serverConfig) throws Exception {
         ShellUtil shell = shellService.getShellUtil(serverConfig);
-        String jpsValue = shell.exec("jps -l");
+        String jpsValue = shell.exec("wmic process where \"name like '%java%'\" get ProcessId, CommandLine\n");
+
         log.debug("===========jps=======");
         log.debug(jpsValue);
         log.debug("=====================");
-        String[] jpes = jpsValue.split("\n");
+
+        String[] lines = jpsValue.split("\n");
         List<JarDetailEntity> winCmdEntities = new ArrayList<>();
-        for (String jpe : jpes) {
-            if (jpe.contains("jps")) {
+
+        for (String line : lines) {
+            line = line.trim();
+            if (line.isEmpty() || line.startsWith("CommandLine")) {
                 continue;
             }
+
+            String[] parts = line.split("\\s+");
+            if (parts.length < 2) {
+                continue;
+            }
+
             JarDetailEntity entity = new JarDetailEntity();
-            String[] jps1 = jpe.split(" ");
-            entity.setPid(Integer.parseInt(jps1[0]));
-            this.getjarMessage(shell, entity);
+            entity.setPid(Integer.parseInt(parts[parts.length - 1])); // PID is the last part
+
+            this.getJarMessage(shell, entity);
             if (entity.getPort() == 0) {
                 continue;
             }
@@ -48,7 +87,7 @@ public class WinServerImpl implements WinService {
         return new ResponseEntity<List<JarDetailEntity>>().success(winCmdEntities, "s");
     }
 
-    private void getjarMessage(ShellUtil shell, JarDetailEntity entity) throws Exception {
+    private void getJarMessage(ShellUtil shell, JarDetailEntity entity) throws Exception {
         String jvmmes = shell.exec("jcmd " + entity.getPid() + " VM.command_line");
         if (jvmmes.contains("org.jetbrains")) {
             return;
@@ -101,7 +140,6 @@ public class WinServerImpl implements WinService {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
-
 
 
 }

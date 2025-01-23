@@ -15,7 +15,7 @@ public class ProgramEntity {
     private String name;
     @TableId(value = "ip")
     private String ip;
-    @TableId(value = "port")
+    @TableField(value = "port")
     private int port;
     @TableField(value = "jar_name")
     private String jarName;

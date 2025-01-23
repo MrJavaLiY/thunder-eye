@@ -40,6 +40,9 @@ public class DingNoticeServiceImpl implements DingNoticeService {
     @Override
     public ResponseEntity<String> notice(DingMessage dingMessage) {
         try {
+            if (true){
+                return new ResponseEntity<String>().success("成功","chengg");
+            }
             // 封装钉钉消息实体
             DingTalkEntity dingtalk = new DingTalkEntity(dingMessage);
             log.info("封装数据：{}", JSONObject.toJSONString(dingtalk));
