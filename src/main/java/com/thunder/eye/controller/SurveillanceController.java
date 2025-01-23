@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("surveillance")
 @Api(tags = "监控信息获取")
+@RestController
 public class SurveillanceController {
     @Resource
     StateService stateService;
