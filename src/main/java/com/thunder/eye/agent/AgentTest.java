@@ -20,13 +20,7 @@ public class AgentTest {
     // agentmain 方法：当 JVM 已经启动后调用
     public static void agentmain(String agentArgs, Instrumentation inst) {
         System.out.println("Agent loaded at runtime.");
-        registerTransformer(inst);
+        inst.addTransformer(new LineMonitorClassFileTransformer());
     }
 
-    private static void registerTransformer(Instrumentation inst) {
-        if (instrumentation == null) {
-            instrumentation = inst;
-            instrumentation.addTransformer(new MyTransformer());
-        }
-    }
 }
